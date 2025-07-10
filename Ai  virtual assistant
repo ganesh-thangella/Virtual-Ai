@@ -1,0 +1,38 @@
+import SpeechRecognition as sr
+import datetime
+import time
+import webbrowser
+import pyttsx3
+import os
+engine=pyttsx3.init()
+voice=engine.getProperty('voice')
+def Command():
+    r=sr.Recognizer()
+    print("Listening...............")
+    with sr.Microphone() as source:
+        r.pause_threshold=1
+        audio=r.listen(source)
+    try:
+        print("Processing...........")
+        audio.text=r.recognizer_google(audio,language='en-in')
+        print(audio_text)
+    except Exception as e:
+        print("Say again...")
+        audio_text=None
+    return audio_text
+c=1
+while c!=2:
+    query=Command().lower()
+    if 'open youtube' in query:
+        url="youtube.com"
+        engine.say("opening youtube")
+        engine.runAndWait()
+        webbrowser.open(url)
+    elif 'the time' in query:
+        strTime=datetime.datetime.now.strftime("%H:%M:%S")
+        engine.say(f"the time is {strTime}")
+        engine.runAndWait()
+    elif 'thanks' in query:
+        engine.say(" you are welcome")
+        engine.runAndWait()
+            
